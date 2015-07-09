@@ -1,0 +1,58 @@
+<div class="content">
+
+
+    <div class="breadLine">
+
+        <ul class="breadcrumb">
+            <li><%= link_to "List Categories", categories_path %> <span class="divider">></span></li>
+            <li class="active">Edit</li>
+        </ul>
+
+    </div>
+
+    <div class="workplace">
+
+        <div class="row-fluid">
+
+            <div class="span12">
+                <div class="head">
+                    <div class="isw-grid"></div>
+                    <h1>Categories Management</h1>
+
+                    <div class="clear"></div>
+                </div>
+                <div class="block-fluid">
+                    <%= form_for @model_obj do |f| %>
+                    	<div class="row-form">
+                            <div class="span3">Category Name:</div>
+                            <div class="span9"><%= f.text_field :name, :placeholder => "some text value..."%>
+                                <% f.object.errors[:name].each do |msg| %>
+                                <li style="color: red">
+                                    <%= msg %>
+                                </li>
+                            <% end %>
+                            </div>
+                            <div class="clear"></div>
+                        </div> 
+                        <div class="row-form">
+                            <div class="span3">Activate:</div>
+                            <div class="span9">
+                                <%= f.select :active, [["Active", true], ["Deactive", false]] %>
+                            </div>
+                            <div class="clear"></div>
+                        </div>                          
+                        <div class="row-form">
+                        	<%= f.submit "Update", class: "btn btn-success" %>
+							<div class="clear"></div>
+                        </div>
+                    <% end %>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="dr"><span></span></div>
+
+    </div>
+
+</div>

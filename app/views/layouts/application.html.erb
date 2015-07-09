@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    	<title>NTQ Solution Admin Control Panel</title>
+
+    	<%= favicon_link_tag 'favicon.ico' %>
+
+    	<link href="css/stylesheets.css" rel="stylesheet" type="text/css"/>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+<div>
+    <% flash.each do |message_type, message| %>
+    <%= content_tag(:div, message, class: "alert-#{message_type}") %>
+    <% end %>    
+</div>
+
+<% if logged_in? %>
+        <div class="header">
+            <%= link_to categories_path, :class => "logo" do %>
+        		<%= image_tag("img/logo.png", :alt => "NTQ Solution - Admin Control Panel", :title => "NTQ Solution - Admin Control Panel") %>
+            <% end %> 
+		</div>
+		<div class="menu">
+
+    	<div class="breadLine">
+        	<div class="arrow"></div>
+        	<div class="adminControl active">  
+            	Hi, <%= current_user.name %>
+        	</div>
+    	</div>
+
+    	<div class="admin">
+        	<div class="image">
+            	<%= image_tag current_user.picture.url if current_user.picture? %>
+        	</div>
+        	<ul class="control">
+            	<li><span class="icon-cog"></span> <%= link_to " Update Profile", edit_user_path(current_user) %></li>
+            	<li><span class="icon-share-alt"></span><%= link_to " Logout", logout_path, method: :delete %></li>
+        	</ul>
+    	</div>
+    	    	<ul class="navigation">
+        	<li>
+            	<%= link_to categories_path do %>
+                	<span class="isw-grid"></span><span class="text">Categories</span>
+            	<% end %>
+       		</li>
+        	<li>
+            	<%= link_to products_path do %>
+                	<span class="isw-list"></span><span class="text">Products</span>
+            	<% end %>
+        	</li>
+        	<li>
+                <%= link_to users_path do%>
+                    <span class="isw-user"></span></span><span class="text">Users</span>
+                <% end %>
+        	</li>
+    	</ul>
+	</div>
+<%end%>
+<%= yield %>
+</body>
+</html>
+
+<script type="text/javascript">
+$('#checkAll').click(function() {
+    if(this.checked) {
+        $(':checkbox').each(function() {
+            this.checked = true;
+        });
+    }
+    else {
+        $(':checkbox').each(function() {
+            this.checked = false;
+        });
+    }
+});
+</script>
+
+
+
+

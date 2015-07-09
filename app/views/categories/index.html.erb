@@ -1,0 +1,95 @@
+<div class="content">
+    <div class="breadLine">
+        <ul class="breadcrumb">
+            <li><%= link_to "List Categories", categories_path %></li>
+        </ul>
+
+    </div>
+
+    <div class="workplace">
+
+        <div class="row-fluid">
+            <div class="span12 search">
+                <%= form_tag categories_path, :method => 'get' do %>
+                    <%= text_field_tag :search, params[:search], :class => "span11", :placeholder => "Some text for search..." %>
+                    <button class="btn span1" type="submit">Search</button>
+                <% end %>
+            </div>
+        </div>
+        <!-- /row-fluid-->
+
+        <div class="row-fluid">
+
+            <div class="span12">
+                <div class="head">
+                    <div class="isw-grid"></div>
+                    <h1>Categories Management</h1>
+
+                    <div class="clear"></div>
+                </div>
+                <%= form_tag activate_categories_path, method: :put do %> 
+                <div class="block-fluid table-sorting">
+                    <%= link_to "Add category", new_category_path, :class => "btn btn-add" %>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="table" id="tSortable_2">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="checkAll" value="checkAll" /></th>
+
+                            <th width="15%" class="sorting"><%= link_to "ID", search: params[:search],
+                                                                    col: :id, :sort => @sort_type %>
+                            </th>
+                            <th width="35%" class="sorting"><%= link_to "Username", search: params[:search],
+                                                                    col: :name, :sort => @sort_type %>
+                            </th>
+                            <th width="20%" class="sorting"><%= link_to "Activate", search: params[:search],
+                                                                    col: :active, :sort => @sort_type %>
+                            </th>
+                            <th width="10%" class="sorting"><%= link_to "Time Created", 
+                                                                    search: params[:search],
+                                                                    col: :created_at, :sort => @sort_type %>
+                            </th>
+                            <th width="10%" class="sorting"><%= link_to "Time Updated", 
+                                                                    search: params[:search],
+                                                                    col: :updated_at, :sort => @sort_type %>
+                            </th>
+                            <th width="10%">Action</th>
+                        </tr>
+                        </thead>
+                        <% @model_objs.each do |object| %>
+                        <tbody>
+                        <tr>
+                            <td><%= check_box_tag "category_ids[]", object.id %></td>
+                            <td><%= object.id %></td>
+                            <td><%= object.name %></td>
+                            <%if object.active == true %>
+                                <td><span class="text-success">Activated</span></td>
+                            <%else%>
+                                <td><span class="text-error">Deactived</span></td>
+                            <%end%>
+                            <td><%= object.created_at %></td>
+                            <td><%= object.updated_at %></td>
+                            <td><%= link_to "Edit", edit_category_path(object), :class => "btn btn-info" %>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <% end %>
+                    </table>
+                    <div class="bulk-action">
+                        <%= submit_tag "Activate", :name => "Activate", :class => "btn btn-success" %>
+                        <%= submit_tag "Delete", :name => "Delete", :class => "btn btn-danger" %>
+                    </div><!-- /bulk-action-->
+                    <div class="dataTables_paginate">
+                        <%#= link_to "First", users_path, :action => :whaterver, :page => 1 %>
+                        <%= will_paginate @model_objs %>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <% end %>
+            </div>
+
+        </div>
+        <div class="dr"><span></span></div>
+
+    </div>
+
+</div>
